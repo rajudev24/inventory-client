@@ -1,3 +1,4 @@
+"use client";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -39,7 +40,7 @@ const UpdateProduct: React.FC = () => {
     if (!id) return;
     setLoading(true);
 
-    fetch(`http://localhost:5000/product/${id}`)
+    fetch(`https://inventory-nestjs-server.onrender.com/product/${id}`)
       .then((response) => response.json())
       .then((data) => {
         reset(data);
@@ -54,13 +55,16 @@ const UpdateProduct: React.FC = () => {
   const onSubmit: SubmitHandler<Updates> = async (data) => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:5000/product/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        `https://inventory-nestjs-server.onrender.com/product/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
       if (response.ok) {
         const resData = await response.json();

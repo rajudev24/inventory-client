@@ -1,3 +1,4 @@
+"use client";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -38,7 +39,7 @@ const AddProduct = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        "http://localhost:5000/product/add-product",
+        "https://inventory-nestjs-server.onrender.com/product/add-product",
         {
           method: "POST",
           headers: {

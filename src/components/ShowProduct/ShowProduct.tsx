@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { IProduct } from "./interface/IShowProduct";
 import { ToastContainer, toast } from "react-toastify";
@@ -11,7 +12,7 @@ const ShowProduct = () => {
   useEffect(() => {
     setLoading(true);
 
-    fetch("http://localhost:5000/product/get-products")
+    fetch("https://inventory-nestjs-server.onrender.com/product/get-products")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -32,7 +33,7 @@ const ShowProduct = () => {
   }, []);
 
   const handleDelete = async (id: string) => {
-    const url = `http://localhost:5000/product/${id}`;
+    const url = `https://inventory-nestjs-server.onrender.com/product/${id}`;
 
     try {
       const response = await fetch(url, {
@@ -74,31 +75,33 @@ const ShowProduct = () => {
               <th className="bg-violet-600 text-white p-4">Expairation Date</th>
               <th className="bg-violet-600 text-white p-4">Actions</th>
             </tr>
-            {productLists &&
-              productLists.map((product: IProduct, index: number) => (
-                <tr
-                  key={index}
-                  className={index % 2 === 0 ? "bg-gray-200" : ""}
-                >
-                  <td className="p-4">{product.productName}</td>
-                  <td className="p-4"> ${product.productPrice}</td>
-                  <td className="p-4">{product.productQuantity}</td>
-                  <td className="p-4">{product.exprationDate}</td>
+            <tbody>
+              {productLists &&
+                productLists.map((product: IProduct, index: number) => (
+                  <tr
+                    key={index}
+                    className={index % 2 === 0 ? "bg-gray-200" : ""}
+                  >
+                    <td className="p-4">{product.productName}</td>
+                    <td className="p-4"> ${product.productPrice}</td>
+                    <td className="p-4">{product.productQuantity}</td>
+                    <td className="p-4">{product.exprationDate}</td>
 
-                  <Link
-                    href={`/${product._id}`}
-                    className="bg-orange-400 p-2.5 m-2 px-4 rounded-md text-white font-semibold hover:bg-neutral-300 hover:text-black hover:duration-500"
-                  >
-                    Update
-                  </Link>
-                  <button
-                    onClick={(e) => handleDelete(product._id)}
-                    className="bg-red-500 p-2 m-2 px-4 rounded-md text-white font-semibold  hover:bg-neutral-300 hover:text-black hover:duration-500"
-                  >
-                    Delete
-                  </button>
-                </tr>
-              ))}
+                    <Link
+                      href={`/${product._id}`}
+                      className="bg-orange-400 p-2.5 m-2 px-4 rounded-md text-white font-semibold hover:bg-neutral-300 hover:text-black hover:duration-500"
+                    >
+                      Update
+                    </Link>
+                    <button
+                      onClick={(e) => handleDelete(product._id)}
+                      className="bg-red-500 p-2 m-2 px-4 rounded-md text-white font-semibold  hover:bg-neutral-300 hover:text-black hover:duration-500"
+                    >
+                      Delete
+                    </button>
+                  </tr>
+                ))}
+            </tbody>
           </table>
         )}
       </div>
